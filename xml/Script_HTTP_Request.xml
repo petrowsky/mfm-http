@@ -1,126 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fmxmlsnippet type="FMObjectList">
   <Script includeInMenu="False" SiriShortcutVisible="False" runFullAccess="False" id="0" name="HTTP ( {request} )">
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>/##</Text>
+      <Text>PURPOSE: Send a Request To an API EndPoint</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>Send a Request To an API EndPoint</Text>
+      <Text>Source: https://github.com/proofgeist/mfm-http</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>success means the server responded. It still may respond with "Bad Request"</Text>
+      <Text>IMPORTANT: You must add any allowed non-standard headers into the CLEAN HEADERS section.</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>Success means the server responded. It still may respond with "Bad Request"</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>Set $$ENV_DEBUG_HTTP to turn on logging</Text>
     </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>@param {object} request</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>@param {string} request.url the url to send the request to</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>@param {object} [request.query] name value pairs in JSON that serialize to what comes after the "?" in the url. For nested querystrings you can use "|_" and "_|" for "[" and "]". Ex. customer[name] would be customer|_name_|</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>@param {object} [request.headers] value pairs to set the headers example {"Accept" ; "application/json" }</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>@param {object} [request.auth] basic auth</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>@param {string} [request.auth.user] basic auth user name</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>@param {string} [request.auth.password] basic auth pasword</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>@param {string} [request.data] the data to send only with POST, PUT, PATCH, For nested application/x-www-form-urlencoded data you can use "|_" and "_|" for "[" and "]". Ex. customer[name] would be customer|_name_|</Text>
+    <Step enable="False" id="0" name="Set Variable">
+      <Value>
+        <Calculation><![CDATA[False]]></Calculation>
+      </Value>
+      <Repetition>
+        <Calculation><![CDATA[1]]></Calculation>
+      </Repetition>
+      <Name>$$ENV_DEBUG_HTTP</Name>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@returnSuccess {object} response</Text>
+      <Text>@param request {object}</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@returnSuccess {number} response.codethe http status code</Text>
+      <Text>  .method {string} = A supported HTTP request method. (Defaults to GET when empty)</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@returnSuccess {string} response.status the http status message</Text>
+      <Text>  .url {string} = The url to send the request to.</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@returnSuccess {object} response.headers the reponse headers</Text>
+      <Text>  .query {object} = Name value pairs in JSON that serialize to what comes after the "?" in the url. (*1)</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@returnSuccess {object} response.trace the request trace - if options.trace = true</Text>
+      <Text>  .headers {object} = Value pairs to set headers. Example: {"Accept" ; "application/json" }</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@returnSuccess {object} response.duration the request duration - if options.duration = true</Text>
+      <Text>  .auth {object} = Basic auth object.</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@returnSuccess {*} response.body the response body</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>@returnError {object} error</Text>
+      <Text>    .user {string} = Basic auth user name.</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@returnError {number} error.errorCode</Text>
+      <Text>    .password {string} = Basic auth password.</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@returnError {...}</Text>
+      <Text>  .data {string} = The data to send. Only used with POST, PUT, PATCH. (*2)</Text>
     </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>version 1.7.0</Text>
+      <Text>  .options {object} = Script execution options. One or more of trace, duration or base64.</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@history v1.5 major refactor 11/12/2018 - todd@geistinteractive.com - based on Generator 1 version</Text>
+      <Text>  *1: For nested querystrings you can use "|_" and "_|" for "[" and "]". Ex. customer[name] would be customer|_name_|</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@history v1.6 handles binary, and form data, also handles 100 status codes</Text>
+      <Text>  *2: For nested application/x-www-form-urlencoded data you can use "|_" and "_|" for "[" and "]". Ex. customer[name] would be customer|_name_|</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>Example $request - Copy &amp; Paste as needed.</Text>
+    </Step>
+    <Step enable="False" id="0" name="Set Variable">
+      <Value>
+        <Calculation><![CDATA[JSONSetElement ( "{}" ;
+	[ "method" ; "GET/POST/PUT/PATCH/DELETE" ; JSONString ];
+	[ "url" ; "some_value" ; JSONString ];
+	[ "query" ; "{}" ; JSONObject ];
+	[ "headers" ; "{}" ; JSONObject ];
+	[ "auth" ; "{}" ; JSONObject ];
+	[ "data" ; "" ; JSONString ]
+)]]></Calculation>
+      </Value>
+      <Repetition>
+        <Calculation><![CDATA[1]]></Calculation>
+      </Repetition>
+      <Name>$request</Name>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>@returnSuccess response {object}</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@history v1.6.1 fixes empty headers bug</Text>
+      <Text>  .code {number} = The http status code. (e.g. 200, 403)</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@history v1.6.2 fixes empty headers bug for real</Text>
+      <Text>  .status {string} = The http status message.</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@history v1.6.4 fixes basic auth space in user name issue</Text>
+      <Text>  .headers {object} = The reponse headers.</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@history v1.7.0 adds nested form fields using application/x-www-form-urlencoded</Text>
+      <Text>  .trace {object} = The request trace if request.options.trace = true.</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>@history v1.8.0 adds options for trace and duration</Text>
+      <Text>  .duration {object} = The request duration if request.options.duration = true.</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>  .body {*} = The response body.</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>@returnError error {object}</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>  .errorCode {number}</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>  .{...} {object}</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
+    <Step enable="False" id="0" name="Insert Text">
+      <SelectAll state="True"/>
+      <Text>ADDITIONAL DOCUMENTATION&#13;&#13;# @history&#13;#   v1.5 major refactor 11/12/2018 - todd@geistinteractive.com - based on Generator 1 version&#13;#   v1.6 handles binary, and form data, also handles 100 status codes&#13;#   v1.6.1 fixes empty headers bug&#13;#   v1.6.2 fixes empty headers bug for real&#13;#   v1.6.4 fixes basic auth space in user name issue&#13;#   v1.7.0 adds nested form fields using application/x-www-form-urlencoded&#13;#   v1.8.0 adds options for trace and duration&#13;#   v1.9.0 revised and updated with header filtering matt@filemakermagazine.com&#13;</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>@license MIT</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>#/</Text>
-    </Step>
     <Step enable="True" id="0" name="Set Error Capture">
       <Set state="True"/>
     </Step>
     <Step enable="True" id="0" name="Allow User Abort">
       <Set state="False"/>
     </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
+    <Step enable="True" id="0" name="Set Variable">
+      <Repetition>
+        <Calculation><![CDATA[1]]></Calculation>
+      </Repetition>
+      <Name>$error</Name>
+    </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>| PARSE PARAMETERS |</Text>
+      <Text>  PARSE PARAMETERS</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
@@ -134,11 +159,21 @@
       </Repetition>
       <Name>$request</Name>
     </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="If">
       <Calculation><![CDATA[IsEmpty ( $request )]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="Exit Script"/>
     <Step enable="True" id="0" name="End If"/>
+    <Step enable="True" id="0" name="Set Variable">
+      <Value>
+        <Calculation><![CDATA[JSONGetElement ( $request; "method" )]]></Calculation>
+      </Value>
+      <Repetition>
+        <Calculation><![CDATA[1]]></Calculation>
+      </Repetition>
+      <Name>$method</Name>
+    </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
         <Calculation><![CDATA[JSONGetElement($request; "url" )]]></Calculation>
@@ -195,37 +230,163 @@
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[JSONGetElement( $request  ; "options")]]></Calculation>
+        <Calculation><![CDATA[Let ( [ ~values = JSONGetElement( $request  ; "options")
+];
+	If ( not IsEmpty ( ~values ) ; ~values ; "{}" )
+)]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
       </Repetition>
       <Name>$options</Name>
     </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>--------------------------------------------------------------------------------------------</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text> CLEAN HEADERS</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>--------------------------------------------------------------------------------------------</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>https://en.wikipedia.org/wiki/List_of_HTTP_header_fields</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>https://www.rfc-editor.org/rfc/rfc9110.html#fields</Text>
+    </Step>
     <Step enable="True" id="0" name="If">
-      <Calculation><![CDATA[IsEmpty ( $options )]]></Calculation>
+      <Calculation><![CDATA[not IsEmpty ( $headers )]]></Calculation>
+    </Step>
+    <Step enable="True" id="0" name="Insert Text">
+      <SelectAll state="True"/>
+      <Text>A-IM&#13;Accept&#13;Accept-Charset&#13;Accept-Datetime&#13;Accept-Encoding&#13;Accept-Language&#13;Access-Control-Request-Method&#13;Access-Control-Request-Headers&#13;Authorization&#13;Cache-Control&#13;Connection&#13;Content-Encoding&#13;Content-Length&#13;Content-Type&#13;Cookie&#13;Date&#13;Expect&#13;Forwarded&#13;From&#13;Host&#13;If-Match&#13;If-Modified-Since&#13;If-None-Match&#13;If-Range&#13;If-Unmodified-Since&#13;Max-Forwards&#13;Origin&#13;Pragma&#13;Prefer&#13;Proxy-Authorization&#13;Range&#13;Referer&#13;TE&#13;Trailer&#13;Transfer-Encoding&#13;User-Agent&#13;Upgrade&#13;Via</Text>
+      <Field>$httpStandardHeaders</Field>
+    </Step>
+    <Step enable="True" id="0" name="Insert Text">
+      <SelectAll state="True"/>
+      <Text>Correlation-ID&#13;DNT&#13;Front-End-Https&#13;Proxy-Connection&#13;Save-Data&#13;Sec-GPC&#13;Upgrade-Insecure-Requests&#13;X-Authorization&#13;X-ATT-DeviceId&#13;X-Correlation-ID&#13;X-Csrf-Token&#13;X-Forwarded-For&#13;X-Forwarded-Host&#13;X-Forwarded-Proto&#13;X-Http-Method-Override&#13;X-Request-ID&#13;X-Requested-With&#13;X-UIDH&#13;X-Wap-Profile</Text>
+      <Field>$httpNonStandardHeaders</Field>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA["{}"]]></Calculation>
+        <Calculation><![CDATA[While ( [
+		~i = 0;
+		~original = $headers;
+		~updated = "{}";
+		~headerList = $httpStandardHeaders &¶ & $httpNonStandardHeaders;
+		~keys = JSONListKeys ( ~original ; "." );
+		~debug = ""
+	]; 
+		~i < ValueCount ( ~headerList ) ;
+	[
+		~i = ~i + 1;
+		~header = GetValue ( ~headerList ; ~i );
+		~exists = GetAsBoolean ( Position ( ¶ & ~keys & ¶ ; ¶ & ~header & ¶ ; 1 ; 1 ) );
+		~lowerKey = Lower ( ~header );
+		~upperKey = Upper ( ~header );
+		~lowerValue = JSONGetElement ( ~original ; ~lowerKey );
+		~upperValue = JSONGetElement ( ~original ; ~upperKey );
+		~matchingValue = JSONGetElement ( ~original ; ~header );
+		~updated = Case (
+						// Empty value
+						~exists and IsEmpty ( ~lowerValue ) and IsEmpty ( ~upperValue ) and IsEmpty ( ~matchingValue );
+							JSONSetElement ( ~updated ; ~header ;
+								~matchingValue;
+								JSONGetElementType ( ~original ; ~header )
+							);
+
+						// Proper matching keys.
+						~exists and not IsEmpty ( ~matchingValue );
+							JSONSetElement ( ~updated ; ~header ;
+								~matchingValue;
+								JSONGetElementType ( ~original ; ~matchingValue )
+							);
+
+						// Lower case keys.
+						~exists and not IsEmpty ( ~lowerValue );
+							JSONSetElement ( ~updated ; ~header ;
+								~lowerValue;
+								JSONGetElementType ( ~original ; ~lowerKey )
+							);
+
+						// Upper case keys.
+						~exists and not IsEmpty ( ~upperValue );
+							JSONSetElement ( ~updated ; ~header ;
+								~upperValue ;
+								JSONGetElementType ( ~original ; ~upperKey )
+							);
+
+						// Pass through results.
+						~updated
+					);
+
+		// Used for debugging.
+		~debug = List ( ~debug ; ~header & "->" &~exists )
+	];
+		~updated
+)
+
+/*
+This loop uses the supplied allowed
+header lists and converts any lower
+or upper, but not mixed case headers
+into a fixed version. HTTP headers
+are case-insensitive but JSON is not.
+*/]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
       </Repetition>
-      <Name>$options</Name>
+      <Name>$updated</Name>
+    </Step>
+    <Step enable="True" id="0" name="Set Variable">
+      <Value>
+        <Calculation><![CDATA[ValueCount ( JSONListKeys ( $headers ; "." ) ) = ValueCount ( JSONListKeys ( $updated ; "." ) )]]></Calculation>
+      </Value>
+      <Repetition>
+        <Calculation><![CDATA[1]]></Calculation>
+      </Repetition>
+      <Name>$cleanSuccess</Name>
+    </Step>
+    <Step enable="True" id="0" name="If">
+      <Calculation><![CDATA[not $cleanSuccess]]></Calculation>
+    </Step>
+    <Step enable="True" id="0" name="Set Variable">
+      <Value>
+        <Calculation><![CDATA[JSONSetElement( $responseJSON ; 
+       [ "code" ; -1 ; JSONNumber ];
+       [ "status" ; "Expected header is missing" ; JSONString ]
+
+ )]]></Calculation>
+      </Value>
+      <Repetition>
+        <Calculation><![CDATA[1]]></Calculation>
+      </Repetition>
+      <Name>$responseJSON</Name>
+    </Step>
+    <Step enable="True" id="0" name="Exit Script">
+      <Calculation><![CDATA[$responseJSON]]></Calculation>
+    </Step>
+    <Step enable="True" id="0" name="Else"/>
+    <Step enable="True" id="0" name="Set Variable">
+      <Value>
+        <Calculation><![CDATA[$updated]]></Calculation>
+      </Value>
+      <Repetition>
+        <Calculation><![CDATA[1]]></Calculation>
+      </Repetition>
+      <Name>$headers</Name>
     </Step>
     <Step enable="True" id="0" name="End If"/>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>--------------------------------------------------------------------------------------------</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
+    <Step enable="True" id="0" name="End If"/>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>| HANDLE QUERY |</Text>
+      <Text> HANDLE QUERY</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
@@ -235,7 +396,7 @@
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[JSONListKeys ( $query ; "")]]></Calculation>
+        <Calculation><![CDATA[JSONListKeys ( $query ; "" )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -267,8 +428,8 @@
     <Step enable="True" id="0" name="Set Variable">
       <Value>
         <Calculation><![CDATA[List(
-$queryStringList;
-$param & "=" & GetAsURLEncoded (JSONGetElement( $query ; $param ))
+	$queryStringList ;
+	$param & "=" & GetAsURLEncoded ( JSONGetElement ( $query ; $param ) )
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -288,7 +449,7 @@ $param & "=" & GetAsURLEncoded (JSONGetElement( $query ; $param ))
     <Step enable="True" id="0" name="End Loop"/>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Substitute($queryStringList ;  "¶"; "&" )]]></Calculation>
+        <Calculation><![CDATA[Substitute ( $queryStringList ;  "¶";  "&" )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -319,33 +480,28 @@ $param & "=" & GetAsURLEncoded (JSONGetElement( $query ; $param ))
     </Step>
     <Step enable="True" id="0" name="End If"/>
     <Step enable="True" id="0" name="End If"/>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>--------------------------------------------------------------------------------------------</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>| HANDLE DATA |</Text>
+      <Text>  HANDLE DATA</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[JSONGetElement($headers; "Content-Type" )]]></Calculation>
+        <Calculation><![CDATA[JSONGetElement ( $headers ; "Content-Type" )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
       </Repetition>
-      <Name>$ContentType</Name>
+      <Name>$contentType</Name>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="If">
-      <Calculation><![CDATA[$ContentType="application/octet-stream"]]></Calculation>
+      <Calculation><![CDATA[$contentType = "application/octet-stream"]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>----</Text>
@@ -357,7 +513,7 @@ $param & "=" & GetAsURLEncoded (JSONGetElement( $query ; $param ))
       <Text>----</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>there are 3 ways to pass the container data as JSON, base64 is MUCH slower than the others on large files</Text>
+      <Text>There are 3 ways to pass container data as JSON, base64 is MUCH slower than the others on large files.</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
@@ -399,7 +555,7 @@ $param & "=" & GetAsURLEncoded (JSONGetElement( $query ; $param ))
       <Calculation><![CDATA[not IsEmpty ($base64)]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>this is required</Text>
+      <Text>This is required.</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
@@ -423,7 +579,7 @@ $param & "=" & GetAsURLEncoded (JSONGetElement( $query ; $param ))
       <Calculation><![CDATA[not IsEmpty ($varRef) and Left($varRef;1) = "$"]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>#Todo - sanitize evaluate</Text>
+      <Text>@Todo - Sanitize evaluate.</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
@@ -457,10 +613,12 @@ $param & "=" & GetAsURLEncoded (JSONGetElement( $query ; $param ))
       <Name>$dataString</Name>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>--------------------------------------------------------------------------------------------</Text>
+    </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="Else If">
-      <Calculation><![CDATA[$ContentType = "multipart/form-data"]]></Calculation>
+      <Calculation><![CDATA[$contentType = "multipart/form-data"]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>----</Text>
@@ -478,11 +636,11 @@ $param & "=" & GetAsURLEncoded (JSONGetElement( $query ; $param ))
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
       </Repetition>
-      <Name>$MultiPartFormData</Name>
+      <Name>$multiPartFormData</Name>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[JSONListValues ($Data ; "parts")]]></Calculation>
+        <Calculation><![CDATA[JSONListValues ( $Data ; "parts" )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -511,6 +669,7 @@ $param & "=" & GetAsURLEncoded (JSONGetElement( $query ; $param ))
     <Step enable="True" id="0" name="Exit Loop If">
       <Calculation><![CDATA[IsEmpty( $part )]]></Calculation>
     </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
         <Calculation><![CDATA[JSONGetElement ( $part; "body" )]]></Calculation>
@@ -552,23 +711,19 @@ $param & "=" & GetAsURLEncoded (JSONGetElement( $query ; $param ))
       <Name>$filename</Name>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="If">
       <Calculation><![CDATA[$type="application/json"]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>part is applicartion json</Text>
+      <Text>Part is application json.</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Let(
-[
-s = Quote($partBody);
-l = Length ( s )
+        <Calculation><![CDATA[Let( [
+	~s = Quote ( $partBody );
+	~l = Length ( ~s )
 ];
-
-Middle(s;2;l-2)
-
+	Middle ( ~s ; 2 ; ~l - 2 )
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -579,8 +734,8 @@ Middle(s;2;l-2)
     <Step enable="True" id="0" name="Set Variable">
       <Value>
         <Calculation><![CDATA[List(
-$partsString;
-"-F \"" & JSONGetElement ( $part; "name" ) & "=" & $partBody & ";" & "type=application/json\""
+	$partsString;
+	"-F \"" & JSONGetElement ( $part; "name" ) & "=" & $partBody & ";" & "type=application/json\""
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -588,61 +743,60 @@ $partsString;
       </Repetition>
       <Name>$partsString</Name>
     </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="Else If">
       <Calculation><![CDATA[not IsEmpty ( $fileName )]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>part is binary</Text>
+      <Text>Part is binary.</Text>
     </Step>
     <Step enable="True" id="0" name="If">
-      <Calculation><![CDATA[Length($partBody) > 1000 // we assume base64]]></Calculation>
+      <Calculation><![CDATA[Length ( $partBody ) > 1000 // We're assuming base64.]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Base64Decode ( $partBody; $fileName )]]></Calculation>
+        <Calculation><![CDATA[Base64Decode ( $partBody ; $fileName )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[$n]]></Calculation>
       </Repetition>
-      <Name>$File</Name>
+      <Name>$file</Name>
     </Step>
     <Step enable="True" id="0" name="Else If">
-      <Calculation><![CDATA[Left($partBody; 1 ) = "$"]]></Calculation>
+      <Calculation><![CDATA[Left ( $partBody ; 1 ) = "$"]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>assume $var or $$Var</Text>
+      <Text>Dollar sign assumes $var or $$VAR</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>#Todo - sanitize evaluate</Text>
+      <Text>@Todo - Sanitize evaluate.</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Evaluate($partBody)]]></Calculation>
+        <Calculation><![CDATA[Evaluate ( $partBody )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[$n]]></Calculation>
       </Repetition>
-      <Name>$File</Name>
+      <Name>$file</Name>
     </Step>
     <Step enable="True" id="0" name="Else"/>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>field</Text>
+      <Text>Field</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[GetField($partBody)]]></Calculation>
+        <Calculation><![CDATA[GetField ( $partBody )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[$n]]></Calculation>
       </Repetition>
-      <Name>$File</Name>
+      <Name>$file</Name>
     </Step>
     <Step enable="True" id="0" name="End If"/>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA["@$File[" & $n & "]"]]></Calculation>
+        <Calculation><![CDATA["@$file[" & $n & "]"]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -652,8 +806,8 @@ $partsString;
     <Step enable="True" id="0" name="Set Variable">
       <Value>
         <Calculation><![CDATA[List(
-$partsString;
-"-F \"" & JSONGetElement ( $part; "name" ) & "=" & $partBody & ";" & "type="& $type & ";filename="& $fileName & "\""
+	$partsString;
+	"-F \"" & JSONGetElement ( $part; "name" ) & "=" & $partBody & ";" & "type=" & $type & ";filename=" & $fileName & "\""
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -664,13 +818,13 @@ $partsString;
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="Else"/>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>all other types</Text>
+      <Text>All other types.</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[List(
-$partsString;
-"-F \"" & JSONGetElement ( $part; "name" ) & "=" & $partBody & ";" & "type=" &  $type & "\""
+        <Calculation><![CDATA[List (
+	$partsString;
+	"-F \"" & JSONGetElement ( $part; "name" ) & "=" & $partBody & ";" & "type=" &  $type & "\""
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -693,7 +847,7 @@ $partsString;
     <Step enable="True" id="0" name="End Loop"/>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Substitute($partsString ;  "¶"; " " )]]></Calculation>
+        <Calculation><![CDATA[Substitute ( $partsString ; "¶" ; " " )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -701,9 +855,12 @@ $partsString;
       <Name>$dataString</Name>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>--------------------------------------------------------------------------------------------</Text>
+    </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="Else If">
-      <Calculation><![CDATA[$ContentType = "application/x-www-form-urlencoded"]]></Calculation>
+      <Calculation><![CDATA[$contentType = "application/x-www-form-urlencoded"]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="If">
@@ -760,9 +917,9 @@ $partsString;
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[List(
-$queryStringList;
-$param & "=" & GetAsURLEncoded ($value)
+        <Calculation><![CDATA[List (
+	$queryStringList;
+	$param & "=" & GetAsURLEncoded ( $value )
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -782,7 +939,7 @@ $param & "=" & GetAsURLEncoded ($value)
     <Step enable="True" id="0" name="End Loop"/>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Substitute($queryStringList ;  "¶"; "&" )]]></Calculation>
+        <Calculation><![CDATA[Substitute ( $queryStringList ; "¶" ; "&" )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -801,18 +958,16 @@ $param & "=" & GetAsURLEncoded ($value)
     </Step>
     <Step enable="True" id="0" name="End If"/>
     <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="Else"/>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>some API need ordered properties, since most JSON parsers
-       can't guarentee that, we need to treat it as string</Text>
+      <Text>Some APIs need ordered properties, since most JSON parsers can't guarentee that, we need to treat it as a string.</Text>
     </Step>
     <Step enable="True" id="0" name="If">
       <Calculation><![CDATA[not IsEmpty ( $Data ) and $dataQuoted]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Evaluate($data)]]></Calculation>
+        <Calculation><![CDATA[Evaluate ( $data )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -825,7 +980,7 @@ $param & "=" & GetAsURLEncoded ($value)
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Char(45) & Char(45) & "data-raw " & Quote($data)]]></Calculation>
+        <Calculation><![CDATA[Char(45) & Char(45) & "data-raw " & Quote ( $data )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -834,33 +989,25 @@ $param & "=" & GetAsURLEncoded ($value)
     </Step>
     <Step enable="True" id="0" name="End If"/>
     <Step enable="True" id="0" name="End If"/>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>--------------------------------------------------------------------------------------------</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>| HANDLE HEADER |</Text>
+      <Text>  HANDLE HEADERS</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>fixed #20</Text>
+      <Text>Fixed #20</Text>
     </Step>
     <Step enable="True" id="0" name="If">
       <Calculation><![CDATA[not IsEmpty ( $headers )]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[JSONListKeys ( $headers ; "")]]></Calculation>
+        <Calculation><![CDATA[JSONListKeys ( $headers ; "" )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -891,9 +1038,9 @@ $param & "=" & GetAsURLEncoded ($value)
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[List(
-$headerString;
-"-H \"" & $header & ": "  & JSONGetElement( $headers ; $header ) & "\""
+        <Calculation><![CDATA[List (
+	$headerString;
+	"-H \"" & $header & ": "  & JSONGetElement ( $headers ; $header ) & "\""
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -913,7 +1060,7 @@ $headerString;
     <Step enable="True" id="0" name="End Loop"/>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Substitute($headerString ;  "¶"; " " )]]></Calculation>
+        <Calculation><![CDATA[Substitute ( $headerString ; "¶" ; " " )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -923,7 +1070,7 @@ $headerString;
     <Step enable="True" id="0" name="End If"/>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[JSONGetElement ( $headers  ; "Accept" )]]></Calculation>
+        <Calculation><![CDATA[JSONGetElement ( $headers ; "Accept" )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -944,17 +1091,12 @@ $headerString;
       <Name>$cURLContainerOptions</Name>
     </Step>
     <Step enable="True" id="0" name="End If"/>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>--------------------------------------------------------------------------------------------</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>| HANDLE AUTHENTICATION |</Text>
+      <Text>  HANDLE AUTHENTICATION</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
@@ -982,7 +1124,7 @@ $headerString;
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA["-u \"" &  $userName & ":" & $password & "\""]]></Calculation>
+        <Calculation><![CDATA["-u \"" & $userName & ":" & $password & "\""]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -990,24 +1132,19 @@ $headerString;
       <Name>$authString</Name>
     </Step>
     <Step enable="True" id="0" name="End If"/>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>--------------------------------------------------------------------------------------------</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>| HANDLE METHOD |</Text>
+      <Text>  HANDLE METHOD</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[JSONGetElement( Get (ScriptParameter) ; "method" )]]></Calculation>
+        <Calculation><![CDATA[JSONGetElement ( $request ; "method" )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -1036,36 +1173,25 @@ $headerString;
       </Repetition>
       <Name>$methodString</Name>
     </Step>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>--------------------------------------------------------------------------------------------</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>| HANDLE OPTIONS |</Text>
+      <Text>  HANDLE OPTIONS</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Let ( 
+        <Calculation><![CDATA[Let ( ~enableTrace = GetAsBoolean ( JSONGetElement ( $options  ; "trace" ) ); 
+	Case (
+		~enableTrace;
+			" --trace-ascii $traceASCII";
 
-		~isTrace = GetAsBoolean ( JSONGetElement ( $options  ; "trace" ) ) ; 
-
-		Case (
-
-
-				~isTrace = 1 ; " --trace-ascii $traceASCII" ;
-
-				""
-
-			)
-
-
+		""
+	)
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -1075,20 +1201,13 @@ $headerString;
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Let ( 
+        <Calculation><![CDATA[Let ( ~enableDuration = GetAsBoolean ( JSONGetElement ( $options  ; "duration" ) );
+	Case (
+		~enableDuration;
+			~enableDuration;
 
-		~isduration = GetAsBoolean ( JSONGetElement ( $options  ; "duration" ) ) ; 
-
-		Case (
-
-
-				~isDuration = 1 ; ~isDuration ;
-
-				""
-
-			)
-
-
+		""
+	)
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -1098,22 +1217,19 @@ $headerString;
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[JSONGetElement ( $options  ; "base64" )]]></Calculation>
+        <Calculation><![CDATA[JSONGetElement ( $options ; "base64" )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
       </Repetition>
       <Name>$returnBase64</Name>
     </Step>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>--------------------------------------------------------------------------------------------</Text>
-    </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>| cURL OPTIONS |</Text>
+      <Text>  SET cURL OPTIONS</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
@@ -1123,12 +1239,12 @@ $headerString;
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA["-D $ResponseHeaders"]]></Calculation>
+        <Calculation><![CDATA["--dump-header $responseHeaders"]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
       </Repetition>
-      <Name>$FMOptions</Name>
+      <Name>$fmOptions</Name>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
@@ -1136,7 +1252,7 @@ $headerString;
 $headerString & " " & 
 $authString & " " & 
 $dataString & " " & 
-$FMOptions & " " &
+$fmOptions & " " &
 $cURLContainerOptions & " " &
 $trace]]></Calculation>
       </Value>
@@ -1145,13 +1261,18 @@ $trace]]></Calculation>
       </Repetition>
       <Name>$curlOptions</Name>
     </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>fixed #22</Text>
+      <Text>  EXECUTE HTTP</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>--------------------------------------------------------------------------------------------</Text>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)">
+      <Text>Fixed #22</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
@@ -1162,6 +1283,22 @@ $trace]]></Calculation>
       </Repetition>
       <Name>$timerStart</Name>
     </Step>
+    <Step enable="True" id="0" name="If">
+      <Calculation><![CDATA[Let ( ~scheme = "https:" ; If ( Left ( $url ; Length ( ~scheme ) ) = ~scheme ; True ; False ) )]]></Calculation>
+    </Step>
+    <Step enable="True" id="0" name="Insert from URL">
+      <NoInteract state="True"/>
+      <DontEncodeURL state="False"/>
+      <SelectAll state="True"/>
+      <VerifySSLCertificates state="True"/>
+      <CURLOptions>
+        <Calculation><![CDATA[$curlOptions]]></Calculation>
+      </CURLOptions>
+      <Calculation><![CDATA[$url]]></Calculation>
+      <Text/>
+      <Field>$responseBody</Field>
+    </Step>
+    <Step enable="True" id="0" name="Else"/>
     <Step enable="True" id="0" name="Insert from URL">
       <NoInteract state="True"/>
       <DontEncodeURL state="False"/>
@@ -1174,6 +1311,7 @@ $trace]]></Calculation>
       <Text/>
       <Field>$responseBody</Field>
     </Step>
+    <Step enable="True" id="0" name="End If"/>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
         <Calculation><![CDATA[Get ( CurrentTimeUTCMilliseconds ) - $timerStart & " ms"]]></Calculation>
@@ -1194,25 +1332,24 @@ $trace]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[// handles 100 continue, by getting only the last response
-Let(
-[
-r = $ResponseHeaders;
-c = PatternCount(r; "HTTP/");
-pstart = Position ( r; "HTTP/"; 1;c )
-
+        <Calculation><![CDATA[Let( [
+	~r = $responseHeaders;
+	~c = PatternCount ( ~r; "HTTP/" );
+	~pstart = Position ( ~r; "HTTP/" ; 1 ; ~c )
 ];
-Middle ( r; pstart ; 10000000 )
-)]]></Calculation>
+	Middle ( ~r; ~pstart ; 10000000 )
+)
+
+// Handles 100 continue, by getting only the last response.]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
       </Repetition>
-      <Name>$ResponseHeaders</Name>
+      <Name>$responseHeaders</Name>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[GetValue($responseHeaders; 1 )]]></Calculation>
+        <Calculation><![CDATA[GetValue ( $responseHeaders ; 1 )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -1221,21 +1358,15 @@ Middle ( r; pstart ; 10000000 )
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Let(
-[
-line = $responseLine1;
-split = Substitute ( line; " " ; "¶" );
-code = GetAsNumber (GetValue ( split; 2) )
-
+        <Calculation><![CDATA[Let( [
+	~line = $responseLine1;
+	~split = Substitute ( ~line ; " " ; "¶" );
+	~code = GetAsNumber ( GetValue ( ~split ; 2 ) )
 ];
-
-JSONSetElement ( "" ;
-
-       ["message"; line; JSONString ];
-       ["code"; code; JSONNumber ]
-
- )
-
+	JSONSetElement ( "{}" ;
+		["message"; ~line; JSONString ];
+		["code"; ~code; JSONNumber ]
+	)
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -1244,17 +1375,16 @@ JSONSetElement ( "" ;
       <Name>$status</Name>
     </Step>
     <Step enable="True" id="0" name="If">
-      <Calculation><![CDATA[$error = 1631]]></Calculation>
+      <Calculation><![CDATA[$error = 1631 // Connection failed]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="If">
-      <Calculation><![CDATA[JSONGetElement( $status ; "code"  ) = 0]]></Calculation>
+      <Calculation><![CDATA[JSONGetElement ( $status ; "code"  ) = 0]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
         <Calculation><![CDATA[JSONSetElement( $responseJSON ; 
-
-       ["code" ;  0;JSONNumber];
-       ["status" ; "Insert From URL Failed with error: " & $error & ". " & Get(LastErrorDetail)     ; JSONString]
+       [ "code" ; 0 ; JSONNumber ];
+       [ "status" ; "Insert From URL Failed with error: " & $error & ". " & Get ( LastErrorDetail ) ; JSONString ]
 
  )]]></Calculation>
       </Value>
@@ -1269,21 +1399,18 @@ JSONSetElement ( "" ;
     <Step enable="True" id="0" name="End If"/>
     <Step enable="True" id="0" name="End If"/>
     <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>| HANDLE RESPONSE HEADERS |</Text>
+      <Text>  HANDLE RESPONSE HEADERS</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[GetAsBoolean ( RightWords ( $ResponseLine1 ; 1 ) = "OK" ) // 👍]]></Calculation>
+        <Calculation><![CDATA[GetAsBoolean ( RightWords ( $responseLine1 ; 1 ) = "OK" ) // 👍]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -1293,7 +1420,7 @@ JSONSetElement ( "" ;
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[2]]></Calculation>
+        <Calculation><![CDATA[2 // Start on second line.]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -1303,7 +1430,7 @@ JSONSetElement ( "" ;
     <Step enable="True" id="0" name="Loop"/>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[GetValue($ResponseHeaders ; $h )]]></Calculation>
+        <Calculation><![CDATA[GetValue ( $responseHeaders ; $h )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -1311,24 +1438,19 @@ JSONSetElement ( "" ;
       <Name>$headerLine</Name>
     </Step>
     <Step enable="True" id="0" name="Exit Loop If">
-      <Calculation><![CDATA[IsEmpty ($headerLine )]]></Calculation>
+      <Calculation><![CDATA[IsEmpty ( $headerLine )]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Let(
-[
-headerLine = $headerLine;
-p = Position( headerLine ; ":" ; 1; 1 );
-$name = Left(headerLine ; p-1 );
-value = Middle ( headerLine; p + 1; 10000 );
-$value = Trim(value)
-
+        <Calculation><![CDATA[Let( [
+	~headerLine = $headerLine;
+	~p = Position ( ~headerLine ; ":" ; 1 ; 1 );
+	$name = Left ( ~headerLine ; ~p-1 );
+	~value = Middle ( ~headerLine ; ~p + 1 ; 10000 );
+	$value = Trim ( ~value )
 ];
-
-value
-
-
+	~value
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -1366,36 +1488,28 @@ value
       <Name>$h</Name>
     </Step>
     <Step enable="True" id="0" name="End Loop"/>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>--------------------------------------------------------------------------------------------</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>| HANDLE RESPONSE BODY |</Text>
+      <Text>  HANDLE RESPONSE BODY</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[Let(
-[
-contentType = JSONGetElement( $responseHeadersJSON ; "Content-Type");
-contentType = If( IsEmpty( contentType ) ; JSONGetElement( $responseHeadersJSON ; "content-type"); contentType);
-contentType = If( IsEmpty( contentType ) ; JSONGetElement( $responseHeadersJSON ; "content-Type"); contentType);
-contentType = If( IsEmpty( contentType ) ; JSONGetElement( $responseHeadersJSON ; "Content-type"); contentType)
-
+        <Calculation><![CDATA[Let( [
+	~contentType = JSONGetElement ( $responseHeadersJSON ; "Content-Type" );
+	~contentType = If ( IsEmpty ( ~contentType ) ; JSONGetElement ( $responseHeadersJSON ; "content-type" ) ; ~contentType );
+	~contentType = If ( IsEmpty ( ~contentType ) ; JSONGetElement ( $responseHeadersJSON ; "content-Type" ) ; ~contentType );
+	~contentType = If ( IsEmpty ( ~contentType ) ; JSONGetElement ( $responseHeadersJSON ; "Content-type" ) ; ~contentType )
 ];
+	~contentType
+)
 
-contentType
-
-
-)]]></Calculation>
+// Handle various spellings.]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -1404,14 +1518,7 @@ contentType
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[GetValue(
-
-Substitute(
-   $contentType ; ";" ; "¶"
-);
-
-1
-)]]></Calculation>
+        <Calculation><![CDATA[GetValue ( Substitute ( $contentType ; ";" ; "¶" ) ; 1 )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
@@ -1428,20 +1535,31 @@ Substitute(
       </Repetition>
       <Name>$responseBodyType</Name>
     </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="If">
       <Calculation><![CDATA[$contentType = "application/json" or $contentType = "text/javascript"]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[JSONGetElement ( $responseBody; "" )]]></Calculation>
+        <Calculation><![CDATA[JSONGetElement ( $responseBody ; "" )]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
       </Repetition>
       <Name>$responseBody</Name>
     </Step>
+    <Step enable="True" id="0" name="Set Variable">
+      <Value>
+        <Calculation><![CDATA[Left ( $responseBody ; 1 ) & Right ( $responseBody ; 1 )]]></Calculation>
+      </Value>
+      <Repetition>
+        <Calculation><![CDATA[1]]></Calculation>
+      </Repetition>
+      <Name>$enclosingChars</Name>
+    </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="If">
-      <Calculation><![CDATA[Left($responseBody; 1) & Right($responseBody; 1) = "{}"]]></Calculation>
+      <Calculation><![CDATA[$enclosingChars = "{}"]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
@@ -1453,7 +1571,7 @@ Substitute(
       <Name>$responseBodyType</Name>
     </Step>
     <Step enable="True" id="0" name="Else If">
-      <Calculation><![CDATA[Left($responseBody; 1) & Right($responseBody; 1) = "[]"]]></Calculation>
+      <Calculation><![CDATA[$enclosingChars = "[]"]]></Calculation>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
@@ -1465,6 +1583,7 @@ Substitute(
       <Name>$responseBodyType</Name>
     </Step>
     <Step enable="True" id="0" name="End If"/>
+    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="Else If">
       <Calculation><![CDATA[$contentType = "application/octet-stream"]]></Calculation>
     </Step>
@@ -1539,9 +1658,7 @@ Substitute(
     <Step enable="True" id="0" name="Set Variable">
       <Value>
         <Calculation><![CDATA[JSONSetElement ( "{}" ; 
-
-[  "variableName" ; "$$httpResponseContainer" ;  JSONString ]
-
+	[ "variableName" ; "$$httpResponseContainer" ;  JSONString ]
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -1551,66 +1668,31 @@ Substitute(
     </Step>
     <Step enable="True" id="0" name="End If"/>
     <Step enable="True" id="0" name="End If"/>
-    <Step enable="True" id="0" name="# (comment)">
-      <Text>--------------------------------------------------------------------------------------------</Text>
-    </Step>
-    <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
-      <Text>| PACKAGE RESPONSE |</Text>
+      <Text> PACKAGE RESPONSE</Text>
     </Step>
     <Step enable="True" id="0" name="# (comment)">
       <Text>--------------------------------------------------------------------------------------------</Text>
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA["{}"]]></Calculation>
+        <Calculation><![CDATA[JSONSetElement ( "{}" ;
+	[ "status" ; JSONGetElement ( $status ; "message"); "" ]; // @fix? Why empty string.
+	[ "code" ; JSONGetElement ( $status ; "code" ) ; JSONNumber ];
+	[ "headers" ; $responseHeadersJSON ; JSONObject ];
+	[ "body" ; $responseBody ; $responseBodyType ]
+)]]></Calculation>
       </Value>
       <Repetition>
         <Calculation><![CDATA[1]]></Calculation>
       </Repetition>
       <Name>$responseJSON</Name>
     </Step>
-    <Step enable="True" id="0" name="Set Variable">
-      <Value>
-        <Calculation><![CDATA[JSONSetElement( $responseJSON ; "status" ; JSONGetElement($status; "message"); "" )]]></Calculation>
-      </Value>
-      <Repetition>
-        <Calculation><![CDATA[1]]></Calculation>
-      </Repetition>
-      <Name>$responseJSON</Name>
-    </Step>
-    <Step enable="True" id="0" name="Set Variable">
-      <Value>
-        <Calculation><![CDATA[JSONSetElement( $responseJSON ; "code" ; JSONGetElement($status; "code"); JSONNumber )]]></Calculation>
-      </Value>
-      <Repetition>
-        <Calculation><![CDATA[1]]></Calculation>
-      </Repetition>
-      <Name>$responseJSON</Name>
-    </Step>
-    <Step enable="True" id="0" name="Set Variable">
-      <Value>
-        <Calculation><![CDATA[JSONSetElement( $responseJSON ; "headers" ; $responseHeadersJSON; JSONObject)]]></Calculation>
-      </Value>
-      <Repetition>
-        <Calculation><![CDATA[1]]></Calculation>
-      </Repetition>
-      <Name>$responseJSON</Name>
-    </Step>
-    <Step enable="True" id="0" name="Set Variable">
-      <Value>
-        <Calculation><![CDATA[JSONSetElement( $responseJSON ; "body" ; $responseBody ; $responseBodyType )]]></Calculation>
-      </Value>
-      <Repetition>
-        <Calculation><![CDATA[1]]></Calculation>
-      </Repetition>
-      <Name>$responseJSON</Name>
-    </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="If">
       <Calculation><![CDATA[$duration <> 0]]></Calculation>
     </Step>
@@ -1624,6 +1706,7 @@ Substitute(
       <Name>$responseJSON</Name>
     </Step>
     <Step enable="True" id="0" name="End If"/>
+    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="If">
       <Calculation><![CDATA[$trace <> 0]]></Calculation>
     </Step>
@@ -1646,13 +1729,11 @@ Substitute(
     </Step>
     <Step enable="True" id="0" name="Set Variable">
       <Value>
-        <Calculation><![CDATA[JSONSetElement ( "" ;
-
-["request"; $request; JSONObject];
-["curl.opts"; $curlOptions; JSONString];
-["curl.url"; $url; JSONString];
-["response"; $responseJSON; JSONObject]
-
+        <Calculation><![CDATA[JSONSetElement ( "{}" ;
+	["request" ; $request ; JSONObject ];
+	["curl.opts" ; $curlOptions ; JSONString ];
+	["curl.url" ; $url ; JSONString ];
+	["response" ; $responseJSON ; JSONObject ]
 )]]></Calculation>
       </Value>
       <Repetition>
@@ -1672,7 +1753,6 @@ Substitute(
     </Step>
     <Step enable="True" id="0" name="End If"/>
     <Step enable="True" id="0" name="# (comment)"/>
-    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="Perform Script">
       <Calculation><![CDATA[JSONSetElement ( "";
 
@@ -1683,6 +1763,7 @@ Substitute(
 )]]></Calculation>
       <Script id="0" name="_File Log"/>
     </Step>
+    <Step enable="True" id="0" name="# (comment)"/>
     <Step enable="True" id="0" name="Exit Script">
       <Calculation><![CDATA[$responseJSON]]></Calculation>
     </Step>
